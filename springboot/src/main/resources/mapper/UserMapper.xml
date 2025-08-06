@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.example.mapper.UserMapper">
+
+    <!-- 查出所有用户 -->
+    <select id="selectAll" resultType="com.example.entity.User">
+        SELECT * FROM user
+    </select>
+
+    <!-- 往表中加入指定数量的用户 -->
+    <insert id="insertBatch" parameterType="java.util.List">
+        INSERT INTO user (
+        nickname, name, phone_number, status, password_hash,
+        inserter, insert_time, updater, update_time
+        ) VALUES
+        <foreach collection="list" item="user" separator=",">
+            (
+            #{user.nickname}, #{user.name}, #{user.phoneNumber}, #{user.status}, #{user.passwordHash},
+            #{user.inserter}, #{user.insertTime}, #{user.updater}, #{user.updateTime}
+            )
+        </foreach>
+    </insert>
+
+    <!-- 删除表中的所有数据，但不会删除表结构 -->
+    <delete id="deleteAll">
+        DELETE FROM user
+    </delete>
+
+</mapper>

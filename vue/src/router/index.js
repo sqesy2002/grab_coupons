@@ -1,23 +1,37 @@
+// 确保从 'vue-router' 中正确导入了 createRouter 和 createWebHistory
 import { createRouter, createWebHistory } from 'vue-router'
-import HomeView from '../views/HomeView.vue'
+
+import Layout from '../components/Layout.vue'
+import UserInfo from '../views/UserInfo.vue'
+import CouponInfo from '../views/CouponInfo.vue'
+import GrabCoupon from '../views/GrabCoupon.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
   routes: [
     {
       path: '/',
-      name: 'home',
-      component: HomeView,
-    },
-    {
-      path: '/about',
-      name: 'about',
-      // route level code-splitting
-      // this generates a separate chunk (About.[hash].js) for this route
-      // which is lazy-loaded when the route is visited.
-      component: () => import('../views/AboutView.vue'),
-    },
-  ],
+      component: Layout,
+      redirect: '/user',
+      children: [
+        {
+          path: 'user',
+          name: 'UserInfo',
+          component: UserInfo
+        },
+        {
+          path: 'coupon',
+          name: 'CouponInfo',
+          component: CouponInfo
+        },
+        {
+          path: 'grab',
+          name: 'GrabCoupon',
+          component: GrabCoupon
+        }
+      ]
+    }
+  ]
 })
 
 export default router

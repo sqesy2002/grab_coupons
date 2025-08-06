@@ -20,6 +20,12 @@ public class Result {
         return result;
     }
 
+    public static Result success_msg(String msg){
+        Result result = success();
+        result.setMsg(msg);
+        return result;
+    }
+
     //请求失败
     public static Result error(){
         Result result=new Result();

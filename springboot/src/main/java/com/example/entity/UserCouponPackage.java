@@ -2,7 +2,7 @@ package com.example.entity;
 
 import java.time.LocalDateTime;
 
-public class userCouponPackage {
+public class UserCouponPackage {
     private Integer userId;
     private Integer couponId;
     private Integer quantity;  // 该用户有多少张该种券

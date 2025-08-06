@@ -3,11 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="com.example.mapper.TestMapper">
+<mapper namespace="com.example.mapper.GrabCouponRecordMapper">
 
-    <select id="selectAll" resultType="com.example.entity.Test">
-        SELECT * FROM test
+    <select id="selectAll" resultType="com.example.entity.GrabCouponRecord">
+        SELECT * FROM grab_coupon_record
     </select>
 
-
 </mapper>
+
+

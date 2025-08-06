@@ -2,7 +2,7 @@ package com.example.entity;
 
 import java.time.LocalDateTime;
 
-public class grabCouponRecord {
+public class GrabCouponRecord {
     private Integer id;
     private Integer userId;
     private Integer couponId;

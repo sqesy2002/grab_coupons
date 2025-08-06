@@ -1,18 +1,11 @@
 import { createApp } from 'vue'
 import App from './App.vue'
+// 1. 引入你创建的 router
 import router from './router'
-
-import ElementPlus from 'element-plus'
-import 'element-plus/dist/index.css'
-import zhCn from 'element-plus/es/locale/lang/zh-cn'
-
 
 const app = createApp(App)
 
+// 2. 在挂载应用前，告诉Vue应用实例使用路由
 app.use(router)
-app.use(ElementPlus,{
-    Locale:zhCn,
-})
-
 
 app.mount('#app')
