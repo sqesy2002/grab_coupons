@@ -9,4 +9,14 @@
         SELECT * FROM coupon_type
     </select>
 
+    <insert id="insert" parameterType="com.example.entity.CouponType" >
+        INSERT INTO coupon_type (
+        coupon_name, description, max_per_user, validity_duration,
+        valid_time, invalid_time, inserter, insert_time, updater, update_time
+        ) VALUES (
+        #{couponName}, #{description}, #{maxPerUser}, #{validityDuration},
+        #{valid_time}, #{invalid_time}, #{inserter}, #{insertTime}, #{updater}, #{updateTime}
+        )
+    </insert>
+
 </mapper>

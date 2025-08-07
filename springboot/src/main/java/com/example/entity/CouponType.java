@@ -8,8 +8,8 @@ public class CouponType {
     private String description;  // 券描述
     private Integer maxPerUser;  // 一名用户最多可以持有多少张该种券
     private Integer validityDuration;  // 单位为天，该券的生效时间长度
-    private LocalDateTime valid_time;  // 该券的最早生效时间
-    private LocalDateTime invalid_time;  // 该券在该时间后就无效下架，无法使用
+    private LocalDateTime validTime;  // 该券的最早生效时间
+    private LocalDateTime invalidTime;  // 该券在该时间后就无效下架，无法使用
     private Integer inserter;
     private LocalDateTime insertTime;
     private Integer updater;
@@ -56,19 +56,19 @@ public class CouponType {
     }
 
     public LocalDateTime getValid_time() {
-        return valid_time;
+        return validTime;
     }
 
     public void setValid_time(LocalDateTime valid_time) {
-        this.valid_time = valid_time;
+        this.validTime = valid_time;
     }
 
     public LocalDateTime getInvalid_time() {
-        return invalid_time;
+        return invalidTime;
     }
 
     public void setInvalid_time(LocalDateTime invalid_time) {
-        this.invalid_time = invalid_time;
+        this.invalidTime = invalid_time;
     }
 
     public Integer getInserter() {
