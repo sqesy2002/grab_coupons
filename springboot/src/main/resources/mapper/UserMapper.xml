@@ -10,6 +10,11 @@
         SELECT * FROM user
     </select>
 
+    <!-- 查出所有激活的用户id -->
+    <select id="selectAllUserIds" resultType="java.lang.Integer">
+        select user_id from user where status = 'active'
+    </select>
+
     <!-- 往表中加入指定数量的用户 -->
     <insert id="insertBatch" parameterType="java.util.List">
         INSERT INTO user (

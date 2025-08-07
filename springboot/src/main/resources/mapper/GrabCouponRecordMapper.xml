@@ -9,6 +9,12 @@
         SELECT * FROM grab_coupon_record
     </select>
 
+    <!-- 存一条抢券成功的记录 -->
+    <insert id="insert" parameterType="com.example.entity.GrabCouponRecord">
+        insert into grab_coupon_record (user_id, coupon_id, insert_time)
+        values (#{userId}, #{couponId}, #{insertTime})
+    </insert>
+
 </mapper>
 
 

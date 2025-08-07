@@ -9,4 +9,13 @@
         SELECT * FROM user_coupon_package
     </select>
 
+    <!-- 插入或更新券包 -->
+    <insert id="upsert" parameterType="com.example.entity.UserCouponPackage">
+        insert into user_coupon_package (user_id, coupon_id, quantity, insert_time, update_time)
+        values (#{userId}, #{couponId}, 1, #{insertTime}, #{updateTime})
+        on duplicate key update
+        quantity = quantity + 1,
+        update_time = #{updateTime}
+    </insert>
+
 </mapper>

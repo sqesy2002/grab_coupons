@@ -19,4 +19,9 @@
         )
     </insert>
 
+    <select id="selectById" resultType="com.example.entity.CouponType">
+        SELECT * FROM coupon_type where coupon_id = #{couponId}
+    </select>
+
+
 </mapper>

@@ -13,4 +13,6 @@ public interface CouponTypeMapper {
      * @return 返回影响的行数
      */
     int insert(CouponType couponType);
+
+    CouponType selectById(Integer couponId);
 }

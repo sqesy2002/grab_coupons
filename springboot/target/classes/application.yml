@@ -10,6 +10,26 @@ spring:
     password: 123456
     url: jdbc:mysql://localhost:3306/grab_coupons?useUnicode=true&characterEncoding=utf-8&allowWMultiQueries=true&useSSL=false&serverTimezone=GMT%2b8&allowPublicKeyRetrieval=true
 
+  # ===================================================================
+  # REDIS (基本配置)
+  # ===================================================================
+  data:
+    redis:
+      host: 127.0.0.1      # Redis 服务器地址
+      port: 6379           # Redis 端口
+      password: '000000'
+      database: 0          # 使用的数据库索引 (0-15)
+
+      # ===================================================================
+      # REDIS LETTUCE 连接池 (高并发场景下强烈推荐配置)
+      # ===================================================================
+      lettuce:
+        pool:
+          max-active: 8      # 连接池最大连接数（默认为8）
+          max-idle: 8        # 连接池中的最大空闲连接
+          min-idle: 0        # 连接池中的最小空闲连接
+          max-wait: -1ms     # 连接池耗尽时，客户端等待连接的最长时间，这里表示无限期等待直到有连接可用
+
 # 配置mybatis实体和xml映射
 mybatis:
   # 映射xml

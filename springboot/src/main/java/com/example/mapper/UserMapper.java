@@ -11,6 +11,11 @@ public interface UserMapper {
     List<User> selectAll();
 
     /**
+     * 查询：查出所有的用户id
+     */
+    List<Integer> selectAllUserIds();
+
+    /**
      * 新增：批量插入用户列表
      * @param userList 用户列表
      */
