@@ -68,6 +68,9 @@ public class GrabCouponRecordService {
         // 2. 获取所有用户ID
         List<Integer> userIds = userMapper.selectAllUserIds();
         System.out.println("参与抢券的用户总数: " + userIds.size());
+        // 将用户列表的顺序随机打乱
+        Collections.shuffle(userIds);
+        System.out.println("用户ID已随机打乱，模拟无序请求。");
 
         // 3. 使用CountDownLatch来等待所有数据库操作完成
         CountDownLatch latch = new CountDownLatch(couponQuantity);
@@ -99,17 +102,24 @@ public class GrabCouponRecordService {
 
                 List<String> keys = List.of(stockKey, userCountKey, gateKey);
 
-                // 调用Lua脚本
-                Long result = stringRedisTemplate.execute(
-                        grabScript,
-                        keys,
-                        String.valueOf(userId),
-                        String.valueOf(maxPerUser)
-                );
+                // 使用循环来模拟用户重复抢券的行为
+                while (true) {
+                    // 调用Lua脚本
+                    Long result = stringRedisTemplate.execute(
+                            grabScript,
+                            keys,
+                            String.valueOf(userId),
+                            String.valueOf(maxPerUser)
+                    );
 
-                if (result != null && result == 0) {
-                    // 抢券成功，调用异步服务处理数据库写入
-                    asyncService.handleSuccessfulGrab(userId, couponId, latch);
+                    if (result == 0) {
+                        // 抢券成功，调用异步服务处理数据库写入
+                        asyncService.handleSuccessfulGrab(userId, couponId, latch);
+                        // 成功后继续循环，尝试抢下一张
+                    } else {
+                        // 如果抢券失败（库存不足、达到个人上限等），则停止该用户的抢券行为
+                        break;
+                    }
                 }
             });
         }
@@ -130,6 +140,11 @@ public class GrabCouponRecordService {
         return Duration.between(grabStartTime, endTime).toMillis() / 1000.0;
     }
 
+    /**
+     * 本方法提前把库存与抢券的阀门加载进 Redis，避免抢券时才初始化导致延迟
+     * @param couponId 券ID
+     * @param couponQuantity 本次发布的券数量
+     */
     private void prepareRedisData(Integer couponId, Integer couponQuantity) {
         String stockKey = "coupon:stock:" + couponId;
         String userCountKey = "coupon:user:count:" + couponId;
