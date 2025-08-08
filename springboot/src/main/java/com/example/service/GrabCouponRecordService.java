@@ -30,9 +30,6 @@ public class GrabCouponRecordService {
     @Resource
     private GrabCouponRecordMapper grabCouponRecordMapper;
 
-    @Autowired
-    private StringRedisTemplate stringRedisTemplate;
-
     @Resource
     private UserMapper userMapper;
 
@@ -42,7 +39,10 @@ public class GrabCouponRecordService {
     @Autowired
     private AsyncService asyncService;
 
-    private DefaultRedisScript<Long> grabScript;
+    @Autowired
+    private StringRedisTemplate stringRedisTemplate;
+
+    private DefaultRedisScript<Long> grabScript;  // 用于加载lua脚本的容器
 
     // 使用线程安全的固定大小线程池来模拟用户并发请求
     private static final ExecutorService USER_REQUEST_EXECUTOR = Executors.newFixedThreadPool(100);
@@ -56,7 +56,7 @@ public class GrabCouponRecordService {
 
     public double simulateGrab(Integer couponId, Integer couponQuantity, long startTimeSeconds) {
         // 0. 从数据库获取券的类型信息，主要是为了获取“每人限购数量”
-        CouponType couponType = couponTypeMapper.selectById(couponId); // 假设你有这个方法
+        CouponType couponType = couponTypeMapper.selectById(couponId);
         if (couponType == null) {
             throw new RuntimeException("优惠券类型不存在: " + couponId);
         }
@@ -138,7 +138,7 @@ public class GrabCouponRecordService {
         // 清理旧数据
         stringRedisTemplate.delete(List.of(stockKey, userCountKey, gateKey));
 
-        // 加载库存
+        // 加载库存，将指定数量的优惠券库存加载到Redis的List中
         String[] coupons = IntStream.range(0, couponQuantity).mapToObj(i -> "1").toArray(String[]::new);
         if (coupons.length > 0) {
             stringRedisTemplate.opsForList().leftPushAll(stockKey, coupons);
