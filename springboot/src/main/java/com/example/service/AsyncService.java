@@ -5,7 +5,6 @@ import com.example.entity.UserCouponPackage;
 import com.example.mapper.GrabCouponRecordMapper;
 import com.example.mapper.UserCouponPackageMapper;
 import jakarta.annotation.Resource;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
